@@ -1,9 +1,17 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
+
 
 
 let userSelectedDate;
-const startBtn = document.querySelector(".start_btn")
+const startBtn = document.querySelector("button[data-start]")
+const days = document.querySelector("span[data-days]")
+const hours = document.querySelector("span[data-hours]")
+const minutes = document.querySelector("span[data-minutes]")
+const seconds = document.querySelector("span[data-seconds]")
+console.log(days);
 startBtn.setAttribute("disabled", "disabled")
 
 const options = {
@@ -18,7 +26,10 @@ const options = {
         startBtn.removeAttribute("disabled")
         }
       else{
-        window.alert("Please choose a date in the future")
+        iziToast.error({
+          message: 'Please choose a date in the future',
+          position: 'topRight'
+      });
         startBtn.setAttribute("disabled", "disabled")
         }
     },
@@ -33,15 +44,23 @@ function startTimer(){
     startBtn.setAttribute("disabled", "disabled")
     myInput.setAttribute("disabled", "disabled")
 
-    setInterval(() => {
-       const timeLeft = convertMs(Date.now() - userSelectedDate.getTime());
-       console.log(timeLeft.days)
+    const idIntervals = setInterval(() => {
+       const timeLeft = convertMs(Math.abs(Date.now() - userSelectedDate.getTime()));
+       if((Date.now() - userSelectedDate.getTime()) < 0){
+       days.textContent = addLeadingZero(timeLeft.days)
+       hours.textContent = addLeadingZero(timeLeft.hours)
+       minutes.textContent = addLeadingZero(timeLeft.minutes)
+       seconds.textContent = addLeadingZero(timeLeft.seconds)
+       }else{ 
+        myInput.removeAttribute("disabled")
+        clearInterval(idIntervals)
+      }
     }, 1000)
 }
 
 
 
-function addLeadingZero(value){ return toString(value).padStart(2, "0") }
+function addLeadingZero(value){ return value.toString().padStart(2, "0") }
 
 
 function convertMs(ms) {
