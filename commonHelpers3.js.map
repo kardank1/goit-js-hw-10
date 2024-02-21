@@ -1,1 +1,1 @@
-{"version":3,"file":"commonHelpers3.js","sources":["../src/js/1-timer.js"],"sourcesContent":["import flatpickr from \"flatpickr\";\nimport \"flatpickr/dist/flatpickr.min.css\";\n\nconst myInput = document.querySelector(\"#datetime-picker\");\nconst fp = flatpickr(myInput, {});"],"names":["myInput","flatpickr"],"mappings":"svBAGA,MAAMA,EAAU,SAAS,cAAc,kBAAkB,EAC9CC,EAAUD,EAAS,CAAE,CAAA"}
+{"version":3,"file":"commonHelpers3.js","sources":[],"sourcesContent":[],"names":[],"mappings":""}
